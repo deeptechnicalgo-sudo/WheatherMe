@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    font-weight: 600;
+}
+
+body {
+    position: relative;
+    background: url('downloader.jpg') center/cover no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(15px);
+    z-index: 1;
+}
+
+.main-con {
+    position: relative;
+    z-index: 2;
+    width: 320px;
+    height: 520px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0.15));
+    border-radius: 12px;
+    backdrop-filter: blur(100px);
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.input-con {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.search-city {
+    width: 100%;
+    padding: 10px 16px;
+    padding-right: 45px;
+    border-radius: 99px;
+    border: solid 3px transparent;
+    background: rgba(0, 0, 0, 0.15);
+    outline: none;
+    font-weight: 500;
+    transition: 0.25s border;
+    color: white;
+}
+
+.search-city::placeholder {
+    color: rgba(220, 220, 220, 0.75);
+}
+
+.search-city:focus {
+    border: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.search-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    display: flex;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 28px;
+}
+
+.winfo {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.ldc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.l {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+
+.rtxt {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.wsc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wer {
+    width: 120px;
+    height: 120px;
+}
+
+.wsi {
+    text-align: end;
+    font-weight: 600;
+}
+
+.wsi h1 {
+    font-size: 48px;
+    margin-bottom: 5px;
+}
+
+.wsi h3 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.wcc {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ci {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.ci span {
+    font-size: 30px;
+    color: #00aaff;
+}
+
+.txt-regular {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.hvt, .wvt {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* الحاوية الخاصة بالأيام */
+.fic-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    scrollbar-gutter: stable;
+}
+
+/* Scrollbar Webkit */
+.fic-container::-webkit-scrollbar {
+    height: 8px;
+    background: transparent;
+}
+
+.fic-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+
+}
+
+.fic-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.fic-container::-webkit-scrollbar-button {
+    display: none;
+}
+
+.fic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 10px 12px;
+    cursor: default;
+    user-select: none;
+    transition: background 0.3s ease;
+    gap: 15px;
+    min-width: 70px;
+    flex-shrink: 0;
+}
+
+.fic:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.fid {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.fii {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 6px;
+}
+
+.fit {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sm img
+{
+    height: 180px;
+    width: fit-content;
+}
+
+.sm 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    margin: 25%;
+}
