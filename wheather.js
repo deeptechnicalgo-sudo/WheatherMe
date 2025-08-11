@@ -11,25 +11,40 @@ let image = document.querySelector('.wer');
 let datenow = document.querySelector('.ctd');
 let windspeedtxt = document.querySelector(".wvt");
 let forecastItemContainer = document.querySelector(".fic-container");
+let weathertxt = document.querySelector('.ct.regular-txt');  // النص الخاص بحالة الطقس
 
 searchb.addEventListener('click', () => {
-    if (citysearch.value.trim() !== '') {
-        updateWeatherInfo(citysearch.value.trim());
+    const city = citysearch.value.trim();
+    if (city !== '') {
+        updateWeatherInfo(city);
         citysearch.value = '';
         citysearch.blur();
     }
 });
 
 citysearch.addEventListener("keydown", function(event) {
-    if (event.key === "Enter" && citysearch.value.trim() !== '') {
-        updateWeatherInfo(citysearch.value.trim());
-        citysearch.value = '';
-        citysearch.blur();
+    if (event.key === "Enter") {
+        const city = citysearch.value.trim();
+        if (city !== '') {
+            updateWeatherInfo(city);
+            citysearch.value = '';
+            citysearch.blur();
+        }
     }
 });
 
-async function getFetchData(endPoint, city) {
-    const apiurl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apikey}&units=metric&lang=ar`;
+// دالة بسيطة تحدد لغة النص بناءً على الحروف
+function detectLanguage(text) {
+    // لو فيه حروف عربية رجع 'ar'
+    if (/[\u0600-\u06FF]/.test(text)) return 'ar';
+    // لو فيه حروف لاتينية رجع 'en'
+    if (/[a-zA-Z]/.test(text)) return 'en';
+    // لو مش واضح، رجع 'en' كافتراضي
+    return 'en';
+}
+
+async function getFetchData(endPoint, city, lang) {
+    const apiurl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apikey}&units=metric&lang=${lang}`;
     const response = await fetch(apiurl);
     return response.json();
 }
@@ -55,7 +70,8 @@ function getWeatherIcon(id) {
 }
 
 async function updateWeatherInfo(city) {
-    const weatherData = await getFetchData('weather', city);
+    const lang = detectLanguage(city);
+    const weatherData = await getFetchData('weather', city, lang);
     if (weatherData.cod != 200) { 
         return showScreenSection(notfound);
     }
@@ -63,23 +79,24 @@ async function updateWeatherInfo(city) {
     const {
         name: country,
         main: { temp, humidity },
-        weather: [{ id }],
+        weather: [{ id, description }],
         wind: { speed }
     } = weatherData;
 
     countrytxt.textContent = country;
-    temper.textContent = `${Math.round(temp)} °C`;  // تقريبه لأقرب عدد صحيح
+    temper.textContent = `${Math.round(temp)} °C`;
     hvtxt.textContent = `${humidity}%`;
     windspeedtxt.textContent = `${speed.toFixed(2)} m/s`;
     image.src = getWeatherIcon(id);
     datenow.textContent = getcurrentdate();
+    weathertxt.textContent = description.charAt(0).toUpperCase() + description.slice(1);
 
-    await updateForecastInfo(city);
+    await updateForecastInfo(city, lang);
     showScreenSection(winfor);
 }
 
-async function updateForecastInfo(city) {
-    const forecastData = await getFetchData('forecast', city);
+async function updateForecastInfo(city, lang) {
+    const forecastData = await getFetchData('forecast', city, lang);
     const timetaken = '12:00:00';
     const todayDate = new Date().toISOString().split("T")[0];
     
@@ -107,7 +124,7 @@ function updateForecastItems(weatherData) {
         month: 'short'
     };
     const dateresult = dateTaken.toLocaleDateString('en-US', dateOptions);
-    const temperature = `${Math.round(temp)}°C`;  // تقريبه لأقرب عدد صحيح
+    const temperature = `${Math.round(temp)}°C`;
 
     const forecastItem = `
         <div class="fic">
